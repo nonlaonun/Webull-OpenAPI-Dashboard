@@ -1,0 +1,571 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: #f4f6f9;
+  color: #1a1d29;
+  font-family: "Noto Sans Thai", sans-serif;
+  padding: 24px;
+}
+
+.stock-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.board {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(16, 40, 80, 0.06);
+  overflow: visible;
+  width: 100%;
+}
+
+.kill-all-btn {
+  display: flex;
+  justify-content: center;
+  width: 150px;
+  background: #e02020;
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.stock-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.company-name {
+  font-size: 12px;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
+}
+
+.ticker-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1d29;
+}
+
+.ticker-company {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.card h3, .card h4 {
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: #12315e;
+}
+
+/* wrapper ครอบตาราง ให้ scroll แนวนอนได้เฉพาะตัวตาราง ไม่กระทบ card */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 560px;
+}
+
+thead th {
+  text-align: left;
+  color: #6b7280;
+  font-weight: 400;
+  font-size: 13px;
+  padding: 8px;
+  white-space: nowrap;
+}
+
+thead th.right, td.right {
+  font-weight: 600;
+  font-size: 12px;
+  text-align: right;
+}
+
+tbody td, tfoot td {
+  padding: 12px 8px;
+  border-top: 1px solid #eef1f6;
+  color: #1a1d29;
+}
+
+tbody td:first-child {
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  color: #6b7280;
+  padding: 24px;
+}
+
+.totals td {
+  border-top: 2px solid #d5dce6;
+  font-weight: 700;
+}
+
+.pnl-cell {
+  text-align: right;
+}
+
+.pnl-value {
+  font-weight: 600;
+}
+
+.pnl-pct {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.positive {
+  color: #0f9d58;
+}
+
+.negative {
+  color: #e02020;
+}
+
+.movers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.mover-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  flex-wrap: wrap;
+}
+
+.ticker-company-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.movers-list .mover-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid #eef1f6;
+}
+
+.movers-list .mover-row:first-child {
+  border-top: none;
+}
+
+.mover-symbol {
+  font-weight: 600;
+  color: #1a1d29;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.chart-title {
+  align-self: flex-start;
+  color: #12315e;
+  font-size: 15px;
+}
+
+/* ทุก chart-wrap ต้องบีบตามกรอบ card ไม่ล้น */
+.chart-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  position: relative;
+}
+
+.chart-wrap--doughnut {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.chart-wrap--bar {
+  position: relative;
+  width: 100%;
+  height: 240px;
+}
+
+.chart-center-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.chart-center-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #12315e;
+}
+
+.chart-center-sub {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-label {
+  font-weight: 600;
+  color: #1a1d29;
+}
+
+.legend-value {
+  color: #6b7280;
+}
+
+.Webull-API-Connection {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.Webull-API-Connection-Box {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.Webull-API-Connection-text {
+  color: #12315e;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.Webull-API-Connection-info {
+  font-size: 1.25em;
+  color: #1e6de0;
+  word-break: break-word;
+}
+
+.Connection-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.period-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.symbol-tabs, .detail-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.summary-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* --- Tablet --- */
+@media (max-width: 900px) {
+  body {
+    padding: 16px;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .movers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .Webull-API-Connection-text {
+    font-size: 1.5rem;
+  }
+
+  .Webull-API-Connection-info {
+    font-size: 1rem;
+  }
+
+  .Connection-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .chart-wrap {
+    height: 240px !important;
+  }
+}
+
+.refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eef1f6;
+  color: #1e6de0;
+  border: 1px solid #d5dce6;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: rgba(30, 109, 224, 0.1);
+  border-color: #1e6de0;
+}
+
+.refresh-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.refresh-btn:disabled {
+  color: #9aa0ac;
+  border-color: #e3e8ef;
+  background: #f4f6f9;
+  cursor: not-allowed;
+}
+
+.refresh-btn .refresh-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+
+.refresh-btn.loading .refresh-icon {
+  animation: refresh-spin 0.7s linear infinite;
+}
+
+@keyframes refresh-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* จอเล็ก ลดขนาดปุ่มให้พอดี */
+@media (max-width: 700px) {
+  .refresh-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+
+/* --- Mobile --- */
+@media (max-width: 700px) {
+  .movers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .card h3, .card h4 {
+    font-size: 14px;
+  }
+
+  .Webull-API-Connection {
+    gap: 12px;
+  }
+
+  .Webull-API-Connection-text {
+    font-size: 1.25rem;
+  }
+
+  .Webull-API-Connection-info {
+    font-size: 0.85rem;
+  }
+
+  .Connection-logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .stock-logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-row {
+    gap: 14px;
+  }
+
+  .period-tabs button, .symbol-tabs button, .detail-tabs button {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .chart-wrap {
+    height: 220px !important;
+  }
+
+  .chart-legend {
+    gap: 8px;
+  }
+
+  .legend-item {
+    font-size: 11px;
+  }
+
+  .company-name {
+    max-width: 100px;
+  }
+}
+
+/* --- Small mobile --- */
+@media (max-width: 420px) {
+  body {
+    padding: 10px;
+  }
+
+  .card {   
+    padding:
+     12px;
+  }
+
+  table {
+    min-width: 480px;
+  }
+
+  .card-header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chart-wrap {
+    height: 200px !important;
+  }
+
+  .company-name {
+    max-width: 70px;
+  }
+}
