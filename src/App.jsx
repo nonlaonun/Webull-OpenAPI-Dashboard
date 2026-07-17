@@ -1267,7 +1267,7 @@ function App() {
 
         <div className="movers-grid">
           <section className="card">
-            <h4>หุ้นบวกแรงในวันนี้</h4>
+            <h4>หุ้นบวกแรงในพอร์ต</h4>
             <div id="gainers-list" className="movers-list">
               {movers.gainers.length ? movers.gainers.map((s) => (
                 <div className="mover-item" key={`gainer-${s.ticker}`}>
@@ -1285,7 +1285,7 @@ function App() {
           </section>
 
           <section className="card">
-            <h4>หุ้นลบแรงในวันนี้</h4>
+            <h4>หุ้นลบแรงในพอร์ต</h4>
             <div id="losers-list" className="movers-list">
               {movers.losers.length ? movers.losers.map((s) => (
                 <div className="mover-item" key={`loser-${s.ticker}`}>
