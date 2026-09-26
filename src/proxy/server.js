@@ -6,7 +6,8 @@ import crypto from 'crypto';
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json());  
+
 
 // ---------- Config from ENV ----------
 const APP_KEY = process.env.APP_KEY || "";
@@ -337,6 +338,169 @@ app.get('/orders', async (req, res) => {
     if (req.query.last_client_order_id) params.last_client_order_id = req.query.last_client_order_id;
 
     const { statusCode, data } = await callWebullApi("/openapi/trade/order/history", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/option-contracts', async (req, res) => {
+    const params = buildParams(req, {
+        underlying_symbols: "NVDA",
+        category: "US_OPTION",
+        status: "LISTING",
+    });
+    const { statusCode, data } = await callWebullApi("/openapi/instrument/option/contracts", params);
+    res.status(statusCode).json(data);
+});
+
+
+
+app.get('/option-tick', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "AAPL260522C00300000",
+        category: "US_OPTION",
+        count: "30",
+    });
+    const { statusCode, data } = await callWebullApi("/openapi/market-data/option/tick", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/option-snapshot', async (req, res) => {
+    const params = buildParams(req, {
+        symbols: "AAPL260522C00300000",
+        category: "US_OPTION",
+    });
+    const { statusCode, data } = await callWebullApi("/openapi/market-data/option/snapshot", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/option-bars', async (req, res) => {
+    const params = buildParams(req, {
+        symbols: "AAPL260522C00300000",
+        category: "US_OPTION",
+        timespan: "M1",
+        count: "200",
+        real_time_required: "false",
+    });
+    const { statusCode, data } = await callWebullApi("/openapi/market-data/option/bars", params);
+    res.status(statusCode).json(data);
+});
+
+
+app.get('/income-statement', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "AAPL",
+        category: "US_STOCK",
+        type: "QUARTERLY",
+        count: "5",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/income-statements/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/cash-flow-statement', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "AAPL",
+        category: "US_STOCK",
+        type: "QUARTERLY",
+        count: "5",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/cash-flows/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/balance-sheets-statement', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "AAPL",
+        category: "US_STOCK",
+        type: "QUARTERLY",
+        count: "5",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/balance-sheets/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/forecast-eps', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "AAPL",
+        category: "US_STOCK",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/forecast-eps/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/fund-brief', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "QQQ",
+        category: "US_STOCK",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/fund-brief/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/fund-holdings', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "QQQ",
+        category: "US_STOCK",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/fund-holdings/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/fund-dividends', async (req, res) => {
+    const defaults = {
+        symbol: "QQQ",
+        category: "US_STOCK",
+    };
+    if (req.query.pagination_key) {
+        defaults.pagination_key = "";
+    }
+    const params = buildParams(req, defaults);
+    if (!params.pagination_key) delete params.pagination_key;
+
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/fund-dividends/get", params);
+    res.status(statusCode).json(data);
+});
+
+const MAX_COUNT = 20; // ใช้ตัวเดียวกับ financials_routes.js ถ้ายังไม่มีให้ประกาศไว้ครั้งเดียวพอ
+
+function clampCount(count) {
+  const n = parseInt(count, 10);
+  if (!Number.isFinite(n) || n <= 0) return "5";
+  return String(Math.min(n, MAX_COUNT));
+}
+
+// fund-net-values รองรับ last_date (optional) สำหรับดึงข้อมูลก่อนวันที่ระบุ
+// เหมาะสำหรับทำ infinite scroll / โหลดข้อมูลย้อนหลังเพิ่ม
+app.get('/fund-net-values', async (req, res) => {
+    const defaults = {
+        symbol: "QQQ",
+        category: "US_STOCK",
+        count: "5",
+    };
+    if (req.query.last_date) defaults.last_date = "";
+
+    const params = buildParams(req, defaults);
+    params.count = clampCount(params.count);
+    if (!params.last_date) delete params.last_date;
+
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/fund-net-values/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/fund-performances', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "QQQ",
+        category: "US_STOCK",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/fund-performances/get", params);
+    res.status(statusCode).json(data);
+});
+
+app.get('/fund-ratings', async (req, res) => {
+    const params = buildParams(req, {
+        symbol: "QQQ",
+        category: "US_STOCK",
+    });
+    const { statusCode, data } = await callWebullApi("/market-data/fundamentals/fund-ratings/get", params);
     res.status(statusCode).json(data);
 });
 
