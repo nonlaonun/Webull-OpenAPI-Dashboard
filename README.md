@@ -1,4 +1,3 @@
-
 # 📊 Webull Portfolio Dashboard
 
 แดชบอร์ดแสดงข้อมูลพอร์ตการลงทุนแบบเรียลไทม์ เชื่อมต่อกับ Webull OpenAPI แสดงข้อมูลหุ้นในพอร์ต, ยอดเงินคงเหลือ, ประวัติคำสั่งซื้อขาย, กราฟราคาหุ้นย้อนหลัง, โปรไฟล์บริษัท, ราคาเป้าหมายจากนักวิเคราะห์ และคำแนะนำการลงทุน
@@ -55,7 +54,7 @@ npm run dev
 ```
 
 คำสั่งนี้จะรันทั้ง 2 ฝั่งพร้อมกัน:
-- **Backend (Express proxy server)** ที่ `http://localhost:3001`
+- **Backend (Express proxy server)** ที่ [http://localhost:3001](http://localhost:3001)
 - **Frontend (React + Vite dev server)** ที่ `http://localhost:5173`
 
 เปิด browser ไปที่ `http://localhost:5173` เพื่อดูแดชบอร์ด
@@ -64,7 +63,7 @@ npm run dev
 
 ## 🌐 Localhost แต่ละพอร์ตทำอะไรได้บ้าง
 
-### `http://localhost:3001` — Backend / API Proxy Server
+### [http://localhost:3001](http://localhost:3001) — Backend / API Proxy Server
 
 พอร์ตนี้คือ **Express server** ที่ทำหน้าที่เป็นตัวกลาง (proxy) ระหว่าง frontend กับ Webull OpenAPI จริง โดย:
 
@@ -127,7 +126,7 @@ npm run dev
 http://localhost:3001
 ```
 
-ตัวอย่างด้านล่างใช้ `AAPL` เป็นหลักทรัพย์ตัวอย่าง และ `US_STOCK` เป็น category ตัวอย่าง หากต้องการใช้หลักทรัพย์ประเภทอื่น ให้ตรวจสอบ category และพารามิเตอร์ที่ Webull OpenAPI รองรับ
+ตัวอย่างด้านล่างใช้ `AAPL` และ `US_STOCK` สำหรับข้อมูลหุ้น ส่วน Options ใช้ `US_OPTION` และต้องใช้รหัส Option Contract จริงใน endpoint ที่ต้องระบุสัญญา
 
 ### 1. สถานะระบบและบัญชี
 
@@ -145,9 +144,12 @@ http://localhost:3001
 | Endpoint | คำอธิบาย |
 |---|---|
 | [http://localhost:3001/positions](http://localhost:3001/positions) | ดูรายการหุ้นทั้งหมดที่ถือครองอยู่ในบัญชี พร้อมข้อมูลตำแหน่งการลงทุนที่ API ส่งกลับมา |
+| [http://localhost:3001/positions?account_id=YOUR_ACCOUNT_ID](http://localhost:3001/positions?account_id=YOUR_ACCOUNT_ID) | ดูรายการหุ้นของบัญชีที่ระบุ โดยแทน `YOUR_ACCOUNT_ID` ด้วย Account ID จริง |
 | [http://localhost:3001/balance](http://localhost:3001/balance) | ดูยอดเงินสดคงเหลือและมูลค่าสินทรัพย์ในบัญชี |
+| [http://localhost:3001/balance?account_id=YOUR_ACCOUNT_ID](http://localhost:3001/balance?account_id=YOUR_ACCOUNT_ID) | ดูยอดเงินและมูลค่าสินทรัพย์ของบัญชีที่ระบุ |
 | [http://localhost:3001/orders](http://localhost:3001/orders) | ดูประวัติคำสั่งซื้อขายตามค่าเริ่มต้นของ endpoint |
-| [http://localhost:3001/orders?start_time=2026-01-01&end_time=2026-01-31](http://localhost:3001/orders?start_time=2026-01-01&end_time=2026-01-31) | ดูประวัติคำสั่งซื้อขายภายในช่วงวันที่ที่ระบุ ทั้งนี้รูปแบบวันที่ต้องตรงกับที่ endpoint รองรับ |
+| [http://localhost:3001/orders?start_time=2026-01-01T00:00:00Z&end_time=2026-01-31T23:59:59Z](http://localhost:3001/orders?start_time=2026-01-01T00:00:00Z&end_time=2026-01-31T23:59:59Z) | ดูประวัติคำสั่งซื้อขายภายในช่วงวันที่ที่ระบุ ทั้งนี้รูปแบบวันที่ต้องตรงกับที่ endpoint รองรับ |
+| [http://localhost:3001/orders?account_id=YOUR_ACCOUNT_ID&pagination_key=YOUR_PAGINATION_KEY](http://localhost:3001/orders?account_id=YOUR_ACCOUNT_ID&pagination_key=YOUR_PAGINATION_KEY) | ดูคำสั่งซื้อขายของบัญชีที่ระบุ และใช้ pagination key เพื่อดึงหน้าถัดไปเมื่อ API ส่ง key กลับมา |
 
 > อย่าใช้ `page_size=50` เว้นแต่โค้ดใน `server.js` จะรองรับพารามิเตอร์นี้โดยตรง ตัวอย่างนี้จึงไม่ถือว่า `page_size` เป็นพารามิเตอร์ที่ยืนยันแล้ว
 
@@ -156,7 +158,7 @@ http://localhost:3001
 | Endpoint | คำอธิบาย |
 |---|---|
 | [http://localhost:3001/snapshot?symbols=AAPL&category=US_STOCK](http://localhost:3001/snapshot?symbols=AAPL&category=US_STOCK) | ดูข้อมูลราคาล่าสุดของ AAPL เช่น ราคาปัจจุบันและข้อมูลราคาในวันนั้นตามข้อมูลที่ API ส่งกลับ |
-| [http://localhost:3001/bars?symbol=AAPL&category=US_STOCK&timespan=D&count=1200&real_time_required=true](http://localhost:3001/bars?symbol=AAPL&category=US_STOCK&timespan=D&count=1200&real_time_required=true) | ดึงข้อมูลราคา OHLC รายวันของ AAPL จำนวนสูงสุดตาม `count` ที่ระบุ เพื่อนำไปวาดกราฟแท่งเทียน |
+| [http://localhost:3001/bars?symbol=AAPL&category=US_STOCK&timespan=D&count=200&real_time_required=true](http://localhost:3001/bars?symbol=AAPL&category=US_STOCK&timespan=D&count=200&real_time_required=true) | ดึงข้อมูลราคา OHLC รายวันของ AAPL จำนวนสูงสุดตาม `count` ที่ระบุ เพื่อนำไปวาดกราฟแท่งเทียน |
 | [http://localhost:3001/quotes?symbol=AAPL&category=US_STOCK&depth=1](http://localhost:3001/quotes?symbol=AAPL&category=US_STOCK&depth=1) | ดูราคาเสนอซื้อ (bid) และเสนอขาย (ask) ตามระดับความลึกที่ร้องขอ |
 | [http://localhost:3001/tick?symbol=AAPL&category=US_STOCK&count=30&trading_sessions=RTH](http://localhost:3001/tick?symbol=AAPL&category=US_STOCK&count=30&trading_sessions=RTH) | ดูรายการซื้อขายแบบ tick ของ AAPL โดยร้องขอ 30 รายการในช่วงเวลาซื้อขายปกติ |
 | [http://localhost:3001/footprint?symbols=AAPL&category=US_STOCK&timespan=M1&count=200](http://localhost:3001/footprint?symbols=AAPL&category=US_STOCK&timespan=M1&count=200) | ขอข้อมูล footprint ของ AAPL โดยใช้ช่วงเวลา 1 นาทีและจำนวน 200 ตามพารามิเตอร์ที่ระบุ |
@@ -173,12 +175,12 @@ http://localhost:3001
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| [http://localhost:3001/option-contracts?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-contracts?symbol=AAPL&category=US_STOCK) | ขอรายการสัญญา Options ที่เกี่ยวข้องกับ AAPL ตามพารามิเตอร์ที่ endpoint รองรับ |
-| [http://localhost:3001/option-tick?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-tick?symbol=AAPL&category=US_STOCK) | ขอข้อมูล tick ของสัญญา Options โดยเพิ่มพารามิเตอร์สัญญาที่จำเป็นตาม API หาก endpoint ต้องการ |
-| [http://localhost:3001/option-snapshot?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-snapshot?symbol=AAPL&category=US_STOCK) | ขอ snapshot ราคาของ Options โดยเพิ่มรหัสสัญญาหรือพารามิเตอร์ที่จำเป็นตาม API หากต้องระบุ |
-| [http://localhost:3001/option-bars?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-bars?symbol=AAPL&category=US_STOCK) | ขอข้อมูลราคา Options ย้อนหลัง โดยเพิ่มรหัสสัญญา ช่วงเวลา และจำนวนแท่งตามที่ API ต้องการ |
+| [http://localhost:3001/option-contracts?underlying_symbols=AAPL&category=US_OPTION&status=LISTING](http://localhost:3001/option-contracts?underlying_symbols=AAPL&category=US_OPTION&status=LISTING) | ดึงรายการ Option Contracts ของหุ้น AAPL โดยใช้ `underlying_symbols` และ `category=US_OPTION` |
+| [http://localhost:3001/option-tick?symbol=YOUR_OPTION_SYMBOL&category=US_OPTION&count=30](http://localhost:3001/option-tick?symbol=YOUR_OPTION_SYMBOL&category=US_OPTION&count=30) | ดึงข้อมูล Tick ของ Option Contract โดยแทน `YOUR_OPTION_SYMBOL` ด้วยรหัสสัญญาที่ได้จาก `/option-contracts` |
+| [http://localhost:3001/option-snapshot?symbols=YOUR_OPTION_SYMBOL&category=US_OPTION](http://localhost:3001/option-snapshot?symbols=YOUR_OPTION_SYMBOL&category=US_OPTION) | ดึง Snapshot ของ Option Contract โดยพารามิเตอร์ต้องเป็น `symbols` (ไม่ใช่ `symbol`) และแทน `YOUR_OPTION_SYMBOL` ด้วยรหัสสัญญาจริง |
+| [http://localhost:3001/option-bars?symbols=YOUR_OPTION_SYMBOL&category=US_OPTION&timespan=M1&count=200&real_time_required=false](http://localhost:3001/option-bars?symbols=YOUR_OPTION_SYMBOL&category=US_OPTION&timespan=M1&count=200&real_time_required=false) | ดึงข้อมูลราคา Options ย้อนหลัง โดยใช้ `symbols` (ไม่ใช่ `symbol`) และแทน `YOUR_OPTION_SYMBOL` ด้วยรหัสสัญญาจริง |
 
-> Endpoint กลุ่ม Options อาจต้องใช้รหัสสัญญา Options หรือพารามิเตอร์เฉพาะเพิ่มเติม ไม่ใช่ทุก endpoint จะทำงานได้ด้วย `symbol` และ `category` เพียงสองตัวนี้ ให้ตรวจสอบเงื่อนไขใน `server.js` และเอกสาร Webull OpenAPI ก่อนใช้งานจริง
+> สำหรับ `/option-contracts` ให้ใช้ `underlying_symbols` เพื่อระบุหุ้นอ้างอิง เช่น `AAPL` ส่วน `/option-tick` ใช้ `symbol` แต่ `/option-snapshot` และ `/option-bars` ใช้ `symbols` ตามที่กำหนดใน proxy ทุกตัวอย่างที่ใช้ `YOUR_OPTION_SYMBOL` ต้องแทนด้วยรหัส Option Contract จริงที่ได้จาก `/option-contracts` ก่อนเรียกใช้งาน
 
 ### 6. งบการเงินและข้อมูลพื้นฐาน
 
@@ -244,7 +246,7 @@ curl "http://localhost:3001/account"
 
 1. เปิด Postman แล้วสร้าง request ใหม่
 2. เลือก method ให้ตรงกับ endpoint (`GET` หรือ `POST`)
-3. ใส่ URL เช่น `http://localhost:3001/check-status`
+3. ใส่ URL เช่น [http://localhost:3001/check-status](http://localhost:3001/check-status)
 4. กรอก query parameters หากจำเป็น
 5. กด **Send** เพื่อดูผลลัพธ์
 
@@ -254,7 +256,7 @@ curl "http://localhost:3001/account"
 
 ## ⚠️ หมายเหตุและการแก้ปัญหาเบื้องต้น
 
-- ตรวจสอบว่า backend ทำงานอยู่ที่ `http://localhost:3001` ก่อนเรียก endpoint
+- ตรวจสอบว่า backend ทำงานอยู่ที่ [http://localhost:3001](http://localhost:3001) ก่อนเรียก endpoint
 - ตรวจสอบค่า `APP_KEY`, `APP_SECRET` และ `ACCESS_TOKEN` ใน `.env`
 - หาก token ยังอยู่ในสถานะ `PENDING` ให้ดำเนินการยืนยันตามขั้นตอนในแอป Webull ก่อน
 - ตรวจสอบว่า `symbol`, `category` และพารามิเตอร์อื่น ๆ ตรงกับประเภทสินทรัพย์และข้อกำหนดของ endpoint
