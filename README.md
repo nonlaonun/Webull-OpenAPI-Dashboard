@@ -1,3 +1,4 @@
+
 # 📊 Webull Portfolio Dashboard
 
 แดชบอร์ดแสดงข้อมูลพอร์ตการลงทุนแบบเรียลไทม์ เชื่อมต่อกับ Webull OpenAPI แสดงข้อมูลหุ้นในพอร์ต, ยอดเงินคงเหลือ, ประวัติคำสั่งซื้อขาย, กราฟราคาหุ้นย้อนหลัง, โปรไฟล์บริษัท, ราคาเป้าหมายจากนักวิเคราะห์ และคำแนะนำการลงทุน
@@ -132,10 +133,10 @@ http://localhost:3001
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| `http://localhost:3001/check-status` | ตรวจสอบว่า server ออนไลน์อยู่หรือไม่ พร้อมแสดงสถานะที่ระบบเตรียมไว้ |
-| `http://localhost:3001/account` | ดู Account ID ปัจจุบันที่ระบบใช้อยู่ |
-| `http://localhost:3001/account-list` | ดึงรายการบัญชีที่ API ส่งกลับมา |
-| `http://localhost:3001/create-token` | เริ่มสร้าง Access Token โดยใช้ `APP_KEY` และ `APP_SECRET` ผลลัพธ์อาจเป็น token สถานะ `PENDING` ซึ่งต้องยืนยัน SMS ในแอป Webull ก่อนใช้งานจริง |
+| [http://localhost:3001/check-status](http://localhost:3001/check-status) | ตรวจสอบว่า server ออนไลน์อยู่หรือไม่ พร้อมแสดงสถานะที่ระบบเตรียมไว้ |
+| [http://localhost:3001/account](http://localhost:3001/account) | ดู Account ID ปัจจุบันที่ระบบใช้อยู่ |
+| [http://localhost:3001/account-list](http://localhost:3001/account-list) | ดึงรายการบัญชีที่ API ส่งกลับมา |
+| [http://localhost:3001/create-token](http://localhost:3001/create-token) | เริ่มสร้าง Access Token โดยใช้ `APP_KEY` และ `APP_SECRET` ผลลัพธ์อาจเป็น token สถานะ `PENDING` ซึ่งต้องยืนยัน SMS ในแอป Webull ก่อนใช้งานจริง |
 
 > `/create-token` รองรับทั้ง GET และ POST ตามที่กำหนดใน server หากเรียกผ่าน browser จะเป็น GET โดยอัตโนมัติ
 
@@ -143,10 +144,10 @@ http://localhost:3001
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| `http://localhost:3001/positions` | ดูรายการหุ้นทั้งหมดที่ถือครองอยู่ในบัญชี พร้อมข้อมูลตำแหน่งการลงทุนที่ API ส่งกลับมา |
-| `http://localhost:3001/balance` | ดูยอดเงินสดคงเหลือและมูลค่าสินทรัพย์ในบัญชี |
-| `http://localhost:3001/orders` | ดูประวัติคำสั่งซื้อขายตามค่าเริ่มต้นของ endpoint |
-| `http://localhost:3001/orders?start_time=2026-01-01&end_time=2026-01-31` | ดูประวัติคำสั่งซื้อขายภายในช่วงวันที่ที่ระบุ ทั้งนี้รูปแบบวันที่ต้องตรงกับที่ endpoint รองรับ |
+| [http://localhost:3001/positions](http://localhost:3001/positions) | ดูรายการหุ้นทั้งหมดที่ถือครองอยู่ในบัญชี พร้อมข้อมูลตำแหน่งการลงทุนที่ API ส่งกลับมา |
+| [http://localhost:3001/balance](http://localhost:3001/balance) | ดูยอดเงินสดคงเหลือและมูลค่าสินทรัพย์ในบัญชี |
+| [http://localhost:3001/orders](http://localhost:3001/orders) | ดูประวัติคำสั่งซื้อขายตามค่าเริ่มต้นของ endpoint |
+| [http://localhost:3001/orders?start_time=2026-01-01&end_time=2026-01-31](http://localhost:3001/orders?start_time=2026-01-01&end_time=2026-01-31) | ดูประวัติคำสั่งซื้อขายภายในช่วงวันที่ที่ระบุ ทั้งนี้รูปแบบวันที่ต้องตรงกับที่ endpoint รองรับ |
 
 > อย่าใช้ `page_size=50` เว้นแต่โค้ดใน `server.js` จะรองรับพารามิเตอร์นี้โดยตรง ตัวอย่างนี้จึงไม่ถือว่า `page_size` เป็นพารามิเตอร์ที่ยืนยันแล้ว
 
@@ -154,28 +155,28 @@ http://localhost:3001
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| `http://localhost:3001/snapshot?symbols=AAPL&category=US_STOCK` | ดูข้อมูลราคาล่าสุดของ AAPL เช่น ราคาปัจจุบันและข้อมูลราคาในวันนั้นตามข้อมูลที่ API ส่งกลับ |
-| `http://localhost:3001/bars?symbol=AAPL&category=US_STOCK&timespan=D&count=1200&real_time_required=true` | ดึงข้อมูลราคา OHLC รายวันของ AAPL จำนวนสูงสุดตาม `count` ที่ระบุ เพื่อนำไปวาดกราฟแท่งเทียน |
-| `http://localhost:3001/quotes?symbol=AAPL&category=US_STOCK&depth=1` | ดูราคาเสนอซื้อ (bid) และเสนอขาย (ask) ตามระดับความลึกที่ร้องขอ |
-| `http://localhost:3001/tick?symbol=AAPL&category=US_STOCK&count=30&trading_sessions=RTH` | ดูรายการซื้อขายแบบ tick ของ AAPL โดยร้องขอ 30 รายการในช่วงเวลาซื้อขายปกติ |
-| `http://localhost:3001/footprint?symbols=AAPL&category=US_STOCK&timespan=M1&count=200` | ขอข้อมูล footprint ของ AAPL โดยใช้ช่วงเวลา 1 นาทีและจำนวน 200 ตามพารามิเตอร์ที่ระบุ |
+| [http://localhost:3001/snapshot?symbols=AAPL&category=US_STOCK](http://localhost:3001/snapshot?symbols=AAPL&category=US_STOCK) | ดูข้อมูลราคาล่าสุดของ AAPL เช่น ราคาปัจจุบันและข้อมูลราคาในวันนั้นตามข้อมูลที่ API ส่งกลับ |
+| [http://localhost:3001/bars?symbol=AAPL&category=US_STOCK&timespan=D&count=1200&real_time_required=true](http://localhost:3001/bars?symbol=AAPL&category=US_STOCK&timespan=D&count=1200&real_time_required=true) | ดึงข้อมูลราคา OHLC รายวันของ AAPL จำนวนสูงสุดตาม `count` ที่ระบุ เพื่อนำไปวาดกราฟแท่งเทียน |
+| [http://localhost:3001/quotes?symbol=AAPL&category=US_STOCK&depth=1](http://localhost:3001/quotes?symbol=AAPL&category=US_STOCK&depth=1) | ดูราคาเสนอซื้อ (bid) และเสนอขาย (ask) ตามระดับความลึกที่ร้องขอ |
+| [http://localhost:3001/tick?symbol=AAPL&category=US_STOCK&count=30&trading_sessions=RTH](http://localhost:3001/tick?symbol=AAPL&category=US_STOCK&count=30&trading_sessions=RTH) | ดูรายการซื้อขายแบบ tick ของ AAPL โดยร้องขอ 30 รายการในช่วงเวลาซื้อขายปกติ |
+| [http://localhost:3001/footprint?symbols=AAPL&category=US_STOCK&timespan=M1&count=200](http://localhost:3001/footprint?symbols=AAPL&category=US_STOCK&timespan=M1&count=200) | ขอข้อมูล footprint ของ AAPL โดยใช้ช่วงเวลา 1 นาทีและจำนวน 200 ตามพารามิเตอร์ที่ระบุ |
 
 ### 4. โปรไฟล์บริษัทและข้อมูลนักวิเคราะห์
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| `http://localhost:3001/company-profile?symbol=AAPL&category=US_STOCK` | ดูข้อมูลบริษัท เช่น ชื่อบริษัท อุตสาหกรรม ที่อยู่ และรายละเอียดอื่น ๆ ที่ API มีให้ |
-| `http://localhost:3001/analyst-target-price?symbol=AAPL&category=US_STOCK` | ดูราคาเป้าหมายจากนักวิเคราะห์ เช่น ค่าสูงสุด ต่ำสุด ค่าเฉลี่ย หรือค่ามัธยฐาน หากมีในผลลัพธ์ |
-| `http://localhost:3001/analyst-rating?symbol=AAPL&category=US_STOCK` | ดูคำแนะนำจากนักวิเคราะห์ เช่น Buy, Hold หรือ Sell ตามข้อมูลที่ API ส่งกลับ |
+| [http://localhost:3001/company-profile?symbol=AAPL&category=US_STOCK](http://localhost:3001/company-profile?symbol=AAPL&category=US_STOCK) | ดูข้อมูลบริษัท เช่น ชื่อบริษัท อุตสาหกรรม ที่อยู่ และรายละเอียดอื่น ๆ ที่ API มีให้ |
+| [http://localhost:3001/analyst-target-price?symbol=AAPL&category=US_STOCK](http://localhost:3001/analyst-target-price?symbol=AAPL&category=US_STOCK) | ดูราคาเป้าหมายจากนักวิเคราะห์ เช่น ค่าสูงสุด ต่ำสุด ค่าเฉลี่ย หรือค่ามัธยฐาน หากมีในผลลัพธ์ |
+| [http://localhost:3001/analyst-rating?symbol=AAPL&category=US_STOCK](http://localhost:3001/analyst-rating?symbol=AAPL&category=US_STOCK) | ดูคำแนะนำจากนักวิเคราะห์ เช่น Buy, Hold หรือ Sell ตามข้อมูลที่ API ส่งกลับ |
 
 ### 5. ข้อมูล Options
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| `http://localhost:3001/option-contracts?symbol=AAPL&category=US_STOCK` | ขอรายการสัญญา Options ที่เกี่ยวข้องกับ AAPL ตามพารามิเตอร์ที่ endpoint รองรับ |
-| `http://localhost:3001/option-tick?symbol=AAPL&category=US_STOCK` | ขอข้อมูล tick ของสัญญา Options โดยเพิ่มพารามิเตอร์สัญญาที่จำเป็นตาม API หาก endpoint ต้องการ |
-| `http://localhost:3001/option-snapshot?symbol=AAPL&category=US_STOCK` | ขอ snapshot ราคาของ Options โดยเพิ่มรหัสสัญญาหรือพารามิเตอร์ที่จำเป็นตาม API หากต้องระบุ |
-| `http://localhost:3001/option-bars?symbol=AAPL&category=US_STOCK` | ขอข้อมูลราคา Options ย้อนหลัง โดยเพิ่มรหัสสัญญา ช่วงเวลา และจำนวนแท่งตามที่ API ต้องการ |
+| [http://localhost:3001/option-contracts?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-contracts?symbol=AAPL&category=US_STOCK) | ขอรายการสัญญา Options ที่เกี่ยวข้องกับ AAPL ตามพารามิเตอร์ที่ endpoint รองรับ |
+| [http://localhost:3001/option-tick?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-tick?symbol=AAPL&category=US_STOCK) | ขอข้อมูล tick ของสัญญา Options โดยเพิ่มพารามิเตอร์สัญญาที่จำเป็นตาม API หาก endpoint ต้องการ |
+| [http://localhost:3001/option-snapshot?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-snapshot?symbol=AAPL&category=US_STOCK) | ขอ snapshot ราคาของ Options โดยเพิ่มรหัสสัญญาหรือพารามิเตอร์ที่จำเป็นตาม API หากต้องระบุ |
+| [http://localhost:3001/option-bars?symbol=AAPL&category=US_STOCK](http://localhost:3001/option-bars?symbol=AAPL&category=US_STOCK) | ขอข้อมูลราคา Options ย้อนหลัง โดยเพิ่มรหัสสัญญา ช่วงเวลา และจำนวนแท่งตามที่ API ต้องการ |
 
 > Endpoint กลุ่ม Options อาจต้องใช้รหัสสัญญา Options หรือพารามิเตอร์เฉพาะเพิ่มเติม ไม่ใช่ทุก endpoint จะทำงานได้ด้วย `symbol` และ `category` เพียงสองตัวนี้ ให้ตรวจสอบเงื่อนไขใน `server.js` และเอกสาร Webull OpenAPI ก่อนใช้งานจริง
 
@@ -183,17 +184,17 @@ http://localhost:3001
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| `http://localhost:3001/income-statement?symbol=AAPL&category=US_STOCK` | ขอข้อมูลงบกำไรขาดทุนของ AAPL |
-| `http://localhost:3001/cash-flow-statement?symbol=AAPL&category=US_STOCK` | ขอข้อมูลงบกระแสเงินสดของ AAPL |
-| `http://localhost:3001/balance-sheets-statement?symbol=AAPL&category=US_STOCK` | ขอข้อมูลงบดุลของ AAPL |
-| `http://localhost:3001/forecast-eps?symbol=AAPL&category=US_STOCK` | ดูประมาณการกำไรต่อหุ้น (EPS) ของ AAPL |
-| `http://localhost:3001/filings?symbol=AAPL&category=US_STOCK` | ดูเอกสารที่บริษัท AAPL ยื่นต่อหน่วยงานกำกับดูแล |
-| `http://localhost:3001/earnings-calendars?symbol=AAPL&category=US_STOCK` | ดูข้อมูลปฏิทินประกาศผลประกอบการของ AAPL |
-| `http://localhost:3001/dividend-calendars?symbol=AAPL&category=US_STOCK` | ดูข้อมูลปฏิทินเงินปันผลของ AAPL |
-| `http://localhost:3001/capital-flows?symbol=AAPL&category=US_STOCK` | ขอข้อมูลกระแสเงินทุนที่เกี่ยวข้องกับ AAPL |
-| `http://localhost:3001/industry-comparisons?symbol=AAPL&category=US_STOCK` | เปรียบเทียบข้อมูลของ AAPL กับบริษัทอื่นในอุตสาหกรรม |
-| `http://localhost:3001/financial-indicators?symbol=AAPL&category=US_STOCK` | ขอข้อมูลตัวชี้วัดทางการเงินของ AAPL |
-| `http://localhost:3001/financial-alerts?symbol=AAPL&category=US_STOCK` | ขอข้อมูลแจ้งเตือนทางการเงินที่เกี่ยวข้องกับ AAPL |
+| [http://localhost:3001/income-statement?symbol=AAPL&category=US_STOCK](http://localhost:3001/income-statement?symbol=AAPL&category=US_STOCK) | ขอข้อมูลงบกำไรขาดทุนของ AAPL |
+| [http://localhost:3001/cash-flow-statement?symbol=AAPL&category=US_STOCK](http://localhost:3001/cash-flow-statement?symbol=AAPL&category=US_STOCK) | ขอข้อมูลงบกระแสเงินสดของ AAPL |
+| [http://localhost:3001/balance-sheets-statement?symbol=AAPL&category=US_STOCK](http://localhost:3001/balance-sheets-statement?symbol=AAPL&category=US_STOCK) | ขอข้อมูลงบดุลของ AAPL |
+| [http://localhost:3001/forecast-eps?symbol=AAPL&category=US_STOCK](http://localhost:3001/forecast-eps?symbol=AAPL&category=US_STOCK) | ดูประมาณการกำไรต่อหุ้น (EPS) ของ AAPL |
+| [http://localhost:3001/filings?symbol=AAPL&category=US_STOCK](http://localhost:3001/filings?symbol=AAPL&category=US_STOCK) | ดูเอกสารที่บริษัท AAPL ยื่นต่อหน่วยงานกำกับดูแล |
+| [http://localhost:3001/earnings-calendars?symbol=AAPL&category=US_STOCK](http://localhost:3001/earnings-calendars?symbol=AAPL&category=US_STOCK) | ดูข้อมูลปฏิทินประกาศผลประกอบการของ AAPL |
+| [http://localhost:3001/dividend-calendars?symbol=AAPL&category=US_STOCK](http://localhost:3001/dividend-calendars?symbol=AAPL&category=US_STOCK) | ดูข้อมูลปฏิทินเงินปันผลของ AAPL |
+| [http://localhost:3001/capital-flows?symbol=AAPL&category=US_STOCK](http://localhost:3001/capital-flows?symbol=AAPL&category=US_STOCK) | ขอข้อมูลกระแสเงินทุนที่เกี่ยวข้องกับ AAPL |
+| [http://localhost:3001/industry-comparisons?symbol=AAPL&category=US_STOCK](http://localhost:3001/industry-comparisons?symbol=AAPL&category=US_STOCK) | เปรียบเทียบข้อมูลของ AAPL กับบริษัทอื่นในอุตสาหกรรม |
+| [http://localhost:3001/financial-indicators?symbol=AAPL&category=US_STOCK](http://localhost:3001/financial-indicators?symbol=AAPL&category=US_STOCK) | ขอข้อมูลตัวชี้วัดทางการเงินของ AAPL |
+| [http://localhost:3001/financial-alerts?symbol=AAPL&category=US_STOCK](http://localhost:3001/financial-alerts?symbol=AAPL&category=US_STOCK) | ขอข้อมูลแจ้งเตือนทางการเงินที่เกี่ยวข้องกับ AAPL |
 
 > ตัวอย่างพารามิเตอร์ของกลุ่มข้อมูลการเงินอาจแตกต่างกันตาม endpoint และการตั้งค่า proxy ใน `server.js` โปรดตรวจสอบพารามิเตอร์ที่โค้ดส่งต่อไปยัง Webull OpenAPI ก่อนนำไปใช้จริง
 
@@ -201,17 +202,17 @@ http://localhost:3001
 
 | Endpoint | คำอธิบาย |
 |---|---|
-| `http://localhost:3001/fund-brief?symbol=SPY` | ขอข้อมูลสรุปของกองทุน SPY |
-| `http://localhost:3001/fund-holdings?symbol=SPY` | ดูสินทรัพย์หรือหลักทรัพย์ที่กองทุน SPY ถือครอง |
-| `http://localhost:3001/fund-dividends?symbol=SPY` | ดูประวัติเงินปันผลของกองทุน SPY |
-| `http://localhost:3001/fund-dividends?symbol=SPY&pagination_key=YOUR_PAGINATION_KEY` | ดึงข้อมูลเงินปันผลหน้าถัดไปโดยใช้ pagination key ที่ได้จากผลลัพธ์ก่อนหน้า |
-| `http://localhost:3001/fund-net-values?symbol=SPY` | ดูประวัติมูลค่าทรัพย์สินสุทธิ (NAV) ของกองทุน |
-| `http://localhost:3001/fund-net-values?symbol=SPY&count=20&last_date=2026-01-01` | ขอข้อมูล NAV โดยระบุจำนวนและวันที่ล่าสุดที่ต้องการ ทั้งนี้ต้องใช้รูปแบบวันที่ที่ endpoint รองรับ และ `count` จำกัดได้สูงสุด 20 ตามข้อกำหนดใน proxy |
-| `http://localhost:3001/fund-performances?symbol=SPY` | ดูข้อมูลผลการดำเนินงานของกองทุน |
-| `http://localhost:3001/fund-ratings?symbol=SPY` | ดูอันดับหรือเรตติ้งของกองทุน |
-| `http://localhost:3001/fund-splits?symbol=SPY` | ดูประวัติการ split หรือการเปลี่ยนแปลงจำนวนหน่วยของกองทุน หากมีข้อมูล |
-| `http://localhost:3001/fund-files?symbol=SPY` | ดูเอกสารที่เกี่ยวข้องกับกองทุน |
-| `http://localhost:3001/fund-allocations?symbol=SPY` | ดูข้อมูลการจัดสรรสินทรัพย์ของกองทุน |
+| [http://localhost:3001/fund-brief?symbol=SPY](http://localhost:3001/fund-brief?symbol=SPY) | ขอข้อมูลสรุปของกองทุน SPY |
+| [http://localhost:3001/fund-holdings?symbol=SPY](http://localhost:3001/fund-holdings?symbol=SPY) | ดูสินทรัพย์หรือหลักทรัพย์ที่กองทุน SPY ถือครอง |
+| [http://localhost:3001/fund-dividends?symbol=SPY](http://localhost:3001/fund-dividends?symbol=SPY) | ดูประวัติเงินปันผลของกองทุน SPY |
+| [http://localhost:3001/fund-dividends?symbol=SPY&pagination_key=YOUR_PAGINATION_KEY](http://localhost:3001/fund-dividends?symbol=SPY&pagination_key=YOUR_PAGINATION_KEY) | ดึงข้อมูลเงินปันผลหน้าถัดไปโดยใช้ pagination key ที่ได้จากผลลัพธ์ก่อนหน้า |
+| [http://localhost:3001/fund-net-values?symbol=SPY](http://localhost:3001/fund-net-values?symbol=SPY) | ดูประวัติมูลค่าทรัพย์สินสุทธิ (NAV) ของกองทุน |
+| [http://localhost:3001/fund-net-values?symbol=SPY&count=20&last_date=2026-01-01](http://localhost:3001/fund-net-values?symbol=SPY&count=20&last_date=2026-01-01) | ขอข้อมูล NAV โดยระบุจำนวนและวันที่ล่าสุดที่ต้องการ ทั้งนี้ต้องใช้รูปแบบวันที่ที่ endpoint รองรับ และ `count` จำกัดได้สูงสุด 20 ตามข้อกำหนดใน proxy |
+| [http://localhost:3001/fund-performances?symbol=SPY](http://localhost:3001/fund-performances?symbol=SPY) | ดูข้อมูลผลการดำเนินงานของกองทุน |
+| [http://localhost:3001/fund-ratings?symbol=SPY](http://localhost:3001/fund-ratings?symbol=SPY) | ดูอันดับหรือเรตติ้งของกองทุน |
+| [http://localhost:3001/fund-splits?symbol=SPY](http://localhost:3001/fund-splits?symbol=SPY) | ดูประวัติการ split หรือการเปลี่ยนแปลงจำนวนหน่วยของกองทุน หากมีข้อมูล |
+| [http://localhost:3001/fund-files?symbol=SPY](http://localhost:3001/fund-files?symbol=SPY) | ดูเอกสารที่เกี่ยวข้องกับกองทุน |
+| [http://localhost:3001/fund-allocations?symbol=SPY](http://localhost:3001/fund-allocations?symbol=SPY) | ดูข้อมูลการจัดสรรสินทรัพย์ของกองทุน |
 
 ---
 
